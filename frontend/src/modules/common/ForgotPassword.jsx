@@ -29,7 +29,7 @@ const ForgotPassword = () => {
          alert("Please fill all fields")
       } else {
          if (data.password === data.confirmPassword) {
-            await axios.post("http://localhost:8001/api/user/forgotpassword", data)
+            await axios.post("/api/user/forgotpassword", data)
                .then((res) => {
                   if (res.data.success) {
                      alert('Your password has been changed!')

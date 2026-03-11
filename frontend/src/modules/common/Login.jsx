@@ -37,7 +37,7 @@ const Login = () => {
 
     setLoading(true);
 
-    axios.post('http://localhost:8001/api/user/login', data)
+    axios.post('/api/user/login', data)
       .then((res) => {
         setLoading(false);
 

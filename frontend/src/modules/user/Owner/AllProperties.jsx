@@ -39,7 +39,7 @@ const AllProperties = () => {
 
    const getAllProperty = async () => {
       try {
-         const response = await axios.get('http://localhost:8001/api/owner/getallproperties', {
+         const response = await axios.get('/api/owner/getallproperties', {
             headers: { 'Authorization': `Bearer ${localStorage.getItem("token")}` }
          });
          if (response.data.success) {
@@ -84,7 +84,7 @@ const AllProperties = () => {
          formData.append('additionalInfo', editingPropertyData.additionalInfo);
          formData.append('propertyImage', image);
          formData.append('isAvailable', status);
-         const res = await axios.patch(`http://localhost:8001/api/owner/updateproperty/${propertyId}`, formData, {
+         const res = await axios.patch(`/api/owner/updateproperty/${propertyId}`, formData, {
             headers: { 'Authorization': `Bearer ${localStorage.getItem("token")}` }
          })
          if (res.data.success) {
@@ -101,7 +101,7 @@ const AllProperties = () => {
       let assure = window.confirm("are you sure to delete")
       if (assure) {
          try {
-            const response = await axios.delete(`http://localhost:8001/api/owner/deleteproperty/${propertyId}`, {
+            const response = await axios.delete(`/api/owner/deleteproperty/${propertyId}`, {
                headers: { 'Authorization': `Bearer ${localStorage.getItem("token")}` }
             });
 
