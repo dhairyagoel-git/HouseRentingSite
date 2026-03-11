@@ -19,7 +19,7 @@ const AllUsers = () => {
 
    const getAllUser = async () => {
       try {
-         const response = await axios.get('http://localhost:8001/api/admin/getallusers', {
+         const response = await axios.get('/api/admin/getallusers', {
             headers: { 'Authorization': `Bearer ${localStorage.getItem("token")}` }
          });
 
@@ -35,7 +35,7 @@ const AllUsers = () => {
 
    const handleStatus = async (userid, status) => {
       try {
-         await axios.post('http://localhost:8001/api/admin/handlestatus', { userid, status }, {
+         await axios.post('/api/admin/handlestatus', { userid, status }, {
             headers: { 'Authorization': `Bearer ${localStorage.getItem("token")}` }
          }).then((res) => {
             if (res.data.success) {

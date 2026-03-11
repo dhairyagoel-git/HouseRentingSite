@@ -32,7 +32,7 @@ const AllPropertiesCards = ({ loggedIn }) => {
 
    const getAllProperties = async () => {
       try {
-         const res = await axios.get('http://localhost:8001/api/user/getAllProperties');
+         const res = await axios.get('/api/user/getAllProperties');
          setAllProperties(res.data.data);
       } catch (error) {
          console.log(error);
@@ -41,7 +41,7 @@ const AllPropertiesCards = ({ loggedIn }) => {
 
    const handleBooking = async (status, propertyId, ownerId) => {
       try {
-         await axios.post(`http://localhost:8001/api/user/bookinghandle/${propertyId}`, { userDetails, status, ownerId }, {
+         await axios.post(`/api/user/bookinghandle/${propertyId}`, { userDetails, status, ownerId }, {
             headers: {
                Authorization: `Bearer ${localStorage.getItem('token')}`
             }
@@ -111,7 +111,7 @@ const AllPropertiesCards = ({ loggedIn }) => {
                filteredProperties.map((property) => (
                   <Card border="dark" key={property._id} style={{ width: '18rem', marginLeft: 10 }}>
                      <Card.Body>
-                        <Card.Title><img  src={`http://localhost:8001${property.propertyImage[0].path}`} alt='photos' /></Card.Title>
+                        <Card.Title><img  src={`${property.propertyImage[0].path}`} alt='photos' /></Card.Title>
                         <Card.Text>
                            <p style={{ fontWeight: 600 }} className='my-1'>Location:</p> {property.propertyAddress} <br />
                            <p style={{ fontWeight: 600 }} className='my-1'>Property Type:</p> {property.propertyType} <br />
@@ -152,7 +152,7 @@ const AllPropertiesCards = ({ loggedIn }) => {
                                                    {property.propertyImage.map((image, idx) => (
                                                       <Carousel.Item key={idx}>
                                                          <img
-                                                            src={`http://localhost:8001${image.path}`}
+                                                            src={`${image.path}`}
                                                             alt={`Image ${idx + 1}`}
                                                             className="d-block w-100 "
 

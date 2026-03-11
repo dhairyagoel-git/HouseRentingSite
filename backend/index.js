@@ -6,27 +6,43 @@ const path = require("path");
 
 const app = express();
 
-//////connection to DB/////////////////
+// Connection to DB
 connectionofDb();
-
 
 const PORT = process.env.PORT || 8001;
 
-
 app.use(express.json());
-app.use(cors({
-  origin:'http://localhost:3000',
-  methods:['GET','POST']
-}));
 
+// CORS: allow local dev and deployed frontend (if configured)
+const allowedOrigins = [
+  "http://localhost:3000",
+  process.env.CLIENT_URL,
+].filter(Boolean);
 
+app.use(
+  cors({
+    origin: allowedOrigins,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    credentials: true,
+  })
+);
+
+// Static files for uploads
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-app.use('/api/user', require('./routes/userRoutes.js'))
-app.use('/api/admin', require('./routes/adminRoutes'))
-app.use('/api/owner', require('./routes/ownerRoutes'))
+// API routes
+app.use("/api/user", require("./routes/userRoutes.js"));
+app.use("/api/admin", require("./routes/adminRoutes"));
+app.use("/api/owner", require("./routes/ownerRoutes"));
 
+// Serve frontend build in production (same project)
+const frontendBuildPath = path.join(__dirname, "..", "frontend", "build");
+app.use(express.static(frontendBuildPath));
 
+// SPA fallback: send index.html for any unmatched route
+app.get("*", (req, res) => {
+  res.sendFile(path.join(frontendBuildPath, "index.html"));
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

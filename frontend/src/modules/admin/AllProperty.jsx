@@ -14,7 +14,7 @@ const AllProperty = () => {
 
    const getAllProperty = async () => {
       try {
-         const response = await axios.get('http://localhost:8001/api/admin/getallproperties', {
+         const response = await axios.get('/api/admin/getallproperties', {
             headers: { 'Authorization': `Bearer ${localStorage.getItem("token")}` }
          });
 
