@@ -2,23 +2,22 @@ FROM node:20-alpine AS build
 
 WORKDIR /app
 
-# Install backend dependencies
 COPY backend/package*.json ./backend/
 RUN cd backend && npm install --omit=dev
 
-# Install frontend dependencies and build
+# Frontend: install deps, then copy source and build
 COPY frontend/package*.json ./frontend/
-RUN cd frontend && npm install && npm run build
-
-# Copy full source (backend + frontend) into image
-COPY backend ./backend
+RUN cd frontend && npm install
 COPY frontend ./frontend
+RUN cd frontend && npm run build
+
+# Copy backend source after deps are installed
+COPY backend ./backend
 
 FROM node:20-alpine
 
 WORKDIR /app/backend
 
-# Copy built artifacts from build stage
 COPY --from=build /app/backend /app/backend
 COPY --from=build /app/frontend/build /app/frontend/build
 
